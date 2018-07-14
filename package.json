@@ -1,0 +1,23 @@
+{
+  "name": "node-diff",
+  "version": "1.0.0",
+  "description": "diff command line interface in pure javascript",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/justinbarclay/node-diff.git"
+  },
+  "keywords": [
+    "diff",
+    "Meyer's algorithm",
+  ],
+  "author": "Justin Barclay",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/justinbarclay/node-diff/issues"
+  },
+  "homepage": "https://github.com/justinbarclay/node-diff#readme"
+}
