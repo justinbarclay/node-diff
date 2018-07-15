@@ -1,0 +1,3 @@
+[submodule "lib/diff-rs"]
+	path = lib/diff-rs
+	url = git@github.com:justinbarclay/diff-rs.git
