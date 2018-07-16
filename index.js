@@ -4,13 +4,9 @@ const ENDCOLOUR = `\x1b[0m`;
 const GREEN = '\x1b[32m';
 
 const { PerformanceObserver, performance } = require('perf_hooks');
-let {findShortestEditSequence, concatEditGraph} = require('./lib/diff-rs/ses.js');
+let {findShortestEditSequence, concatEditGraph} = require('./lib/ses.js');
 let fs = require('fs');
 let process = require('process');
-
-function red(string){
-  return `\x1b[31m` + string + `\x1b[0m`;
-}
 
 function validateFiles(args){
   let [fileNameOne, fileNameTwo] = args.slice(2);
