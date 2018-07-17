@@ -4,7 +4,7 @@ const ENDCOLOUR = `\x1b[0m`;
 const GREEN = '\x1b[32m';
 
 const { PerformanceObserver, performance } = require('perf_hooks');
-let {findShortestEditSequence, concatEditGraph} = require('./lib/ses.js');
+let {findShortestEditSequence, concatEditGraph, printAverageTime} = require('./lib/ses.js');
 let fs = require('fs');
 let process = require('process');
 
@@ -22,10 +22,11 @@ function validateFiles(args){
       throw "Missing files";
     }
   } else {
-    console.error(red("You need to specify two files. Ex: `$ index fileOne fileTwo` "));
+    console.error(RED + "You need to specify two files. Ex: `$ index fileOne fileTwo` " + ENDCOLOUR);
     throw "Missing files";
   }
 }
+
 function prettyPrintString(string, simplifiedEdits, type){
   const COLOUR = type === "insert"? GREEN : RED;
   let newString = "";
@@ -51,8 +52,11 @@ function prettyPrintString(string, simplifiedEdits, type){
 function main(){
   try{
     let [fileOne, fileTwo] = validateFiles(process.argv);
-    [difference, editGraph] = findShortestEditSequence(fileOne, fileTwo);
-    simpleEdits = concatEditGraph(editGraph);
+    for(let i=0; i< 1000; i++){
+      console.log(i);
+      [difference, editGraph] = findShortestEditSequence(fileOne, fileTwo);
+      simpleEdits = concatEditGraph(editGraph);
+    }
     console.log("Original\n---");
     console.log(prettyPrintString(fileOne, simpleEdits["delete"], "delete"));
     console.log("---\n");
@@ -60,6 +64,8 @@ function main(){
     console.log("New\n---");
     console.log(prettyPrintString(fileTwo, simpleEdits["insert"], "insert"));
     console.log("---");
+
+    printAverageTime();
   } catch(e){
     return;
   }
