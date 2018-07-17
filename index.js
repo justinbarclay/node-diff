@@ -52,11 +52,10 @@ function prettyPrintString(string, simplifiedEdits, type){
 function main(){
   try{
     let [fileOne, fileTwo] = validateFiles(process.argv);
-    for(let i=0; i< 1000; i++){
-      console.log(i);
-      [difference, editGraph] = findShortestEditSequence(fileOne, fileTwo);
-      simpleEdits = concatEditGraph(editGraph);
-    }
+
+    [difference, editGraph] = findShortestEditSequence(fileOne, fileTwo);
+    simpleEdits = concatEditGraph(editGraph);
+
     console.log("Original\n---");
     console.log(prettyPrintString(fileOne, simpleEdits["delete"], "delete"));
     console.log("---\n");
@@ -65,7 +64,8 @@ function main(){
     console.log(prettyPrintString(fileTwo, simpleEdits["insert"], "insert"));
     console.log("---");
 
-    printAverageTime();
+    // Perf testing
+    // printAverageTime();
   } catch(e){
     return;
   }
