@@ -4,7 +4,7 @@ const ENDCOLOUR = `\x1b[0m`;
 const GREEN = '\x1b[32m';
 
 const { PerformanceObserver, performance } = require('perf_hooks');
-let {findShortestEditSequence, concatEditGraph, printAverageTime} = require('./lib/ses.js');
+let { findShortestEditSequence, concatEditGraph, printAverageTime, shortestEditSequence2 } = require('./lib/ses.js');
 let fs = require('fs');
 let process = require('process');
 
@@ -52,17 +52,33 @@ function prettyPrintString(string, simplifiedEdits, type){
 function main(){
   try{
     let [fileOne, fileTwo] = validateFiles(process.argv);
-
     [difference, editGraph] = findShortestEditSequence(fileOne, fileTwo);
-    simpleEdits = concatEditGraph(editGraph);
+    console.log("Difference ", difference);
 
-    console.log("Original\n---");
-    console.log(prettyPrintString(fileOne, simpleEdits["delete"], "delete"));
-    console.log("---\n");
+    try {
+      console.log(shortestEditSequence2("", "d"));
+      console.log(shortestEditSequence2("", "de"));
+      console.log(shortestEditSequence2("d", ""));
+      console.log(shortestEditSequence2("dead", "Test"));
+      console.log(shortestEditSequence2("ed", "ed"));
+      console.log(shortestEditSequence2("de", "ed"));
+      console.log(shortestEditSequence2("deeef", "feeed"));
+      console.log(shortestEditSequence2("Test", "Tset"));
+      console.log(shortestEditSequence2(fileOne, fileTwo));
+      console.log(shortestEditSequence2("Test", fileTwo));
+    } catch(error){
+      console.log(error);
+    }
 
-    console.log("New\n---");
-    console.log(prettyPrintString(fileTwo, simpleEdits["insert"], "insert"));
-    console.log("---");
+    // simpleEdits = concatEditGraph(editGraph);
+
+    // console.log("Original\n---");
+    // console.log(prettyPrintString(fileOne, simpleEdits["delete"], "delete"));
+    // console.log("---\n");
+
+    // console.log("New\n---");
+    // console.log(prettyPrintString(fileTwo, simpleEdits["insert"], "insert"));
+    // console.log("---");
 
     // Perf testing
     // printAverageTime();
