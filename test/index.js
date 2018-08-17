@@ -1,12 +1,13 @@
 #!/usr/bin/env node
-const RED = '\x1b[31m';
-const ENDCOLOUR = `\x1b[0m`;
-const GREEN = '\x1b[32m';
-
 const { PerformanceObserver, performance } = require('perf_hooks');
 let {findShortestEditSequence, concatEditGraph} = require('./lib/diff-rs/ses.js');
 let fs = require('fs');
 let process = require('process');
+
+
+const RED = '\x1b[31m';
+const GREEN = '\x1b[32m';
+const ENDCOLOUR = `\x1b[0m`;
 
 function red(string){
   return `\x1b[31m` + string + `\x1b[0m`;

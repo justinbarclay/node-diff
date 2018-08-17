@@ -1,0 +1,10 @@
+{
+  "configurations": [
+    {
+      "name": "Diff",
+      "type": "node",
+      "command": "node ",
+      "inspect-brk": false
+    }
+  ]
+}
