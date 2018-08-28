@@ -4,7 +4,8 @@ const ENDCOLOUR = `\x1b[0m`;
 const GREEN = '\x1b[32m';
 
 const { PerformanceObserver, performance } = require('perf_hooks');
-let { findShortestEditSequence, concatEditGraph, printAverageTime, shortestEditSequence2 } = require('./lib/ses.js');
+let { diff, concatEditGraph, printAverageTime, shortestEditSequence2, shortestEditSequence } = require('./lib/diff.js');
+let { diff2, middleSnake } = require('./lib/diff2.js');
 let fs = require('fs');
 let process = require('process');
 
