@@ -52,24 +52,35 @@ function prettyPrintString(string, simplifiedEdits, type){
 
 function main(){
   try{
-    let [fileOne, fileTwo] = validateFiles(process.argv);
-    [difference, editGraph] = findShortestEditSequence(fileOne, fileTwo);
-    console.log("Difference ", difference);
+    // let [fileOne, fileTwo] = validateFiles(process.argv);
+    // [difference, editGraph] = findShortestEditSequence(fileOne, fileTwo);
+    // let start = performance.now();
+    // [difference, _, _] = shortestEditSequence(fileOne, fileTwo);a
+    // console.log("Diff 1 took " + (performance.now() - start) + "ms");
 
-    try {
-      console.log(shortestEditSequence2("", "d"));
-      console.log(shortestEditSequence2("", "de"));
-      console.log(shortestEditSequence2("d", ""));
-      console.log(shortestEditSequence2("dead", "Test"));
-      console.log(shortestEditSequence2("ed", "ed"));
-      console.log(shortestEditSequence2("de", "ed"));
-      console.log(shortestEditSequence2("deeef", "feeed"));
-      console.log(shortestEditSequence2("Test", "Tset"));
-      console.log(shortestEditSequence2(fileOne, fileTwo));
-      console.log(shortestEditSequence2("Test", fileTwo));
-    } catch(error){
-      console.log(error);
-    }
+    // Trigger GC for more accurate benchmarking
+    // global.gc();
+
+    // start = performance.now();
+    // [difference2, _, pointArray] = shortestEditSequenceDC(fileOne, fileTwo);
+    // console.log("Diff 2 took " + (performance.now() - start) + "ms");
+    // console.log("Middle Snake: ", pointArray);
+    // console.log("diff1 == diff2? ", difference == difference2);
+
+    // start = performance.now();
+    // [difference2, _, pointArray] = shortestEditSequenceDC("feeeeed", "deeeeef");
+    // console.log("Diff 2 took " + (performance.now() - start) + "ms");
+    // console.log("Middle Snake: ", pointArray);
+    // console.log("diff2 ", difference2);
+
+    start = performance.now();
+    [difference2, _] = diff2("ab",3, "a", 2);
+    console.log("Diff 2 took " + (performance.now() - start) + "ms");
+    // console.log("Middle Snake: ", pointArray);
+    console.log("diff2 ", difference2);
+  } catch(error){
+    console.log(error);
+  }
 
     // simpleEdits = concatEditGraph(editGraph);
 
@@ -83,9 +94,6 @@ function main(){
 
     // Perf testing
     // printAverageTime();
-  } catch(e){
-    return;
-  }
 }
 
 main();
