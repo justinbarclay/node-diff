@@ -61,9 +61,9 @@ import test from 'ava';
 //   t.is(lengthDiffOne, lengthDiffTwo);
 // });
 
-test('Should find 1 difference with an odd delta', t => {
-  let stringOne = "aba";
-  let stringTwo = "aa";
+test('Should find 1 difference with a delta of 1', t => {
+  let stringOne = "ab";
+  let stringTwo = "a";
   let [lengthDiffOne, _1] = diff(stringOne, stringTwo);
   let [lengthDiffTwo, _2] = diff2(stringOne,stringOne.length,  stringTwo, stringTwo.length);
   console.log(lengthDiffTwo);
