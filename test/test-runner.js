@@ -13,13 +13,13 @@ import test from 'ava';
 // To ensure fundamentals
 /////////////////////////////////////////////////////
 
-// test('Should find a difference of 2, on an even delta', t => {
-//   let stringOne = "a";
-//   let stringTwo = "b";
-//   let [lengthDiffOne, _1] = diff(stringOne, stringTwo);
-//   let [lengthDiffTwo, _2] = diff2(stringOne,stringOne.length,  stringTwo, stringTwo.length);
-//   t.is(lengthDiffOne, lengthDiffTwo);
-// });
+test('Should find a difference of 2, on an even delta', t => {
+  let stringOne = "a";
+  let stringTwo = "b";
+  let [lengthDiffOne, _1] = diff(stringOne, stringTwo);
+  let [lengthDiffTwo, _2] = diff2(stringOne,stringOne.length,  stringTwo, stringTwo.length);
+  t.is(lengthDiffOne, lengthDiffTwo);
+});
 
 // test('Should find 0 difference, for strings of an even delta', t => {
 //   let stringOne = "aa";
