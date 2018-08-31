@@ -82,10 +82,10 @@ test('diff1 and diff2 find a diff 0 for really long strings', t => {
   t.is(lengthDiffOne, lengthDiffTwo);
 });
 
-// test('diff1 and diff2 find a diff (a lot) for a really long string and a short string', t => {
-//   let stringOne = "fe";
-//   let stringTwo = "l";
-//   let [lengthDiffOne, _1] = diff(stringOne, stringTwo);
-//   let [lengthDiffTwo, _2] = diff2(stringOne,stringOne.length,  stringTwo, stringTwo.length);
-//   t.is(lengthDiffOne, lengthDiffTwo);
-// });
+test('diff1 and diff2 find a diff (a lot) for a really long string and a short string', t => {
+  let stringOne = "fe";
+  let stringTwo = "l";
+  let [lengthDiffOne, _1] = diff(stringOne, stringTwo);
+  let [lengthDiffTwo, _2] = diff2(stringOne,stringOne.length,  stringTwo, stringTwo.length);
+  t.is(lengthDiffOne, lengthDiffTwo);
+});
