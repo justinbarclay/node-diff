@@ -55,7 +55,7 @@ function main(){
     // let [fileOne, fileTwo] = validateFiles(process.argv);
     // [difference, editGraph] = findShortestEditSequence(fileOne, fileTwo);
     // let start = performance.now();
-    // [difference, _, _] = shortestEditSequence(fileOne, fileTwo);a
+    // [difference, _, _] = shortestEditSequence(fileOne, fileTwo);
     // console.log("Diff 1 took " + (performance.now() - start) + "ms");
 
     // Trigger GC for more accurate benchmarking
