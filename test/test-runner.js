@@ -1,5 +1,5 @@
 const { PerformanceObserver, performance } = require('perf_hooks');
-let { diff, concatEditGraph, printAverageTime, shortestEditSequence } = require('../lib/diff.js');
+let { diffGreedy, concatEditGraph, printAverageTime, shortestEditSequence } = require('../lib/diff.js');
 let { diffLinear, middleSnake } = require('../lib/diff2.js');
 let fs = require('fs');
 let process = require('process');
@@ -127,9 +127,9 @@ test('diff1 and diffLinear find a diff 0 for really long strings', t => {
   stringTwo = stringTwo.shuffle();
 
 
-  let [lengthDiffOne, _1] = diff(stringOne, stringTwo);
-
+  let [lengthDiffOne, _1] = diffGreedy(stringOne, stringTwo);
+  console.log(_1);
   let [lengthDiffTwo, _2] = diffLinear(stringOne, stringTwo);
-
+  console.log(_2);
   t.is(lengthDiffOne, lengthDiffTwo);
 });
