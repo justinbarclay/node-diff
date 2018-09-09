@@ -22,5 +22,9 @@
   },
   "devDependencies": {
     "ava": "1.0.0-beta.7"
+  },
+  "dependencies": {
+    "minimist": "^1.2.0",
+    "tap-nyan": "^1.1.0"
   }
 }
