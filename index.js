@@ -1,16 +1,42 @@
 #!/usr/bin/env node
-const RED = '\x1b[31m';
-const ENDCOLOUR = `\x1b[0m`;
-const GREEN = '\x1b[32m';
-
 const { PerformanceObserver, performance } = require('perf_hooks');
-let { diff, concatEditGraph, printAverageTime, shortestEditSequence2, shortestEditSequence } = require('./lib/diff.js');
-let { diff2, middleSnake } = require('./lib/diff2.js');
+let { diffGreedy, printAverageTime } = require('./lib/diff.js');
+let { diffLinear } = require('./lib/diff2.js');
 let fs = require('fs');
 let process = require('process');
+let parseArgs = require('minimist');
 
-function validateFiles(args){
-  let [fileNameOne, fileNameTwo] = args.slice(2);
+String.prototype.shuffle = function (thing){
+  var currentIndex = this.length, temporaryValue, randomIndex;
+  var array = this.split("");
+  // While there remain elements to shuffle...
+  while (0 !== currentIndex) {
+
+    // Pick a remaining element...
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+
+    // And swap it with the current element.
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
+  }
+  return array.join("");
+}
+
+function incrementalAverage(sample, avgObj){
+  if(avgObj){
+    let {average, count} = avgObj;
+    average = average + (sample - average)/count++;
+    return {average: average, count: count++};
+  } else {
+    return {average: sample, count: 1};
+  }
+}
+
+function validateFiles([fileNameOne, fileNameTwo]){
+  const RED = '\x1b[31m';
+  const ENDCOLOUR = `\x1b[0m`;
 
   if(fileNameOne && fileNameTwo){
     try {
@@ -28,11 +54,16 @@ function validateFiles(args){
   }
 }
 
-function prettyPrintString(string, simplifiedEdits, type){
+function prettyPrintString(string, editGraph, type){
+  const RED = '\x1b[31m';
+  const ENDCOLOUR = `\x1b[0m`;
+  const GREEN = '\x1b[32m';
+
   const COLOUR = type === "insert"? GREEN : RED;
   let newString = "";
   let from;
   let to;
+  let simplifiedEdits = editGraph[type];
 
   edit = simplifiedEdits.shift();
 
@@ -50,50 +81,30 @@ function prettyPrintString(string, simplifiedEdits, type){
   return newString;
 }
 
+function prettyPrintInsertAndDelete(stringOne, stringTwo, editGraph){
+  console.log(prettyPrintString(stringOne, editGraph, "delete"))
+  console.log("---------");
+  console.log(prettyPrintString(stringTwo, editGraph, "insert"));
+}
+
 function main(){
   try{
-    // let [fileOne, fileTwo] = validateFiles(process.argv);
-    // [difference, editGraph] = findShortestEditSequence(fileOne, fileTwo);
-    // let start = performance.now();
-    // [difference, _, _] = shortestEditSequence(fileOne, fileTwo);
-    // console.log("Diff 1 took " + (performance.now() - start) + "ms");
+    let args = parseArgs(process.argv, {default: {'a': "linear"}})
+    let algo = args["a"];
+    let [fileOne, fileTwo] = validateFiles(args["_"].slice(2));
 
-    // Trigger GC for more accurate benchmarking
-    // global.gc();
-
-    // start = performance.now();
-    // [difference2, _, pointArray] = shortestEditSequenceDC(fileOne, fileTwo);
-    // console.log("Diff 2 took " + (performance.now() - start) + "ms");
-    // console.log("Middle Snake: ", pointArray);
-    // console.log("diff1 == diff2? ", difference == difference2);
-
-    // start = performance.now();
-    // [difference2, _, pointArray] = shortestEditSequenceDC("feeeeed", "deeeeef");
-    // console.log("Diff 2 took " + (performance.now() - start) + "ms");
-    // console.log("Middle Snake: ", pointArray);
-    // console.log("diff2 ", difference2);
-
-    start = performance.now();
-    [difference2, _] = diff2("ab",3, "a", 2);
-    console.log("Diff 2 took " + (performance.now() - start) + "ms");
-    // console.log("Middle Snake: ", pointArray);
-    console.log("diff2 ", difference2);
+    let difference, editGraph;
+    let avg;
+    if(algo === "linear"){
+      [difference, editGraph] = diffLinear(fileOne, fileTwo);
+    } else if (algo === "greedy"){
+      [difference, editGraph] = diffGreedy(fileOne, fileTwo);
+    }
+    prettyPrintInsertAndDelete(fileTwo, fileTwo, editGraph);
+    console.log(`Average time is ${avg.average}`);
   } catch(error){
     console.log(error);
   }
-
-    // simpleEdits = concatEditGraph(editGraph);
-
-    // console.log("Original\n---");
-    // console.log(prettyPrintString(fileOne, simpleEdits["delete"], "delete"));
-    // console.log("---\n");
-
-    // console.log("New\n---");
-    // console.log(prettyPrintString(fileTwo, simpleEdits["insert"], "insert"));
-    // console.log("---");
-
-    // Perf testing
-    // printAverageTime();
 }
 
 main();

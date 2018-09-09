@@ -1,6 +1,6 @@
 const { PerformanceObserver, performance } = require('perf_hooks');
-let { diffGreedy, concatEditGraph, printAverageTime, shortestEditSequence } = require('../lib/diff.js');
-let { diffLinear, middleSnake, prettyPrintString } = require('../lib/diff2.js');
+let { diffGreedy, shortestEditSequence } = require('../lib/diff.js');
+let { diffLinear, middleSnake } = require('../lib/diff2.js');
 let fs = require('fs');
 let process = require('process');
 
